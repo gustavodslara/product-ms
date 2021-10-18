@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  API:
+    image: 'product-ms-app:latest'
+    ports:
+      - "9999:9999"
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/product_ms?currentSchema=public
+
+  PostgreSQL:
+    image: postgres:13.1-alpine
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=product_ms
+      - POSTGRES_PASSWORD=pgsqlcompassouol
+      - POSTGRES_USER=postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
