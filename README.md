@@ -16,5 +16,6 @@ Buildar o projeto
 ### Docker compose
 
 > docker build -t product-ms-app .
+
 > docker-compose up
 
